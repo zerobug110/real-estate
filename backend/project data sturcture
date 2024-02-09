@@ -1,0 +1,70 @@
+User
+|-- _id
+|-- username
+|-- email
+|-- password
+|-- (other user-related fields)
+
+Property
+|-- _id
+|-- type
+|-- bedrooms
+|-- bathrooms
+|-- squareFootage
+|-- price
+|-- address
+|-- description
+|-- images
+|-- location (embedded object with latitude and longitude)
+
+Listing
+|-- _id
+|-- propertyId (reference to Property model)
+|-- availability
+|-- unitNumber
+|-- (other listing-related fields)
+
+Review
+|-- _id
+|-- userId (reference to User model)
+|-- propertyId (reference to Property model)
+|-- rating
+|-- comments
+|-- timestamp
+|-- (other review-related fields)
+
+Booking
+|-- _id
+|-- userId (reference to User model)
+|-- propertyId (reference to Property model)
+|-- checkInDate
+|-- checkOutDate
+|-- status
+|-- (other booking-related fields)
+
+Favorite
+|-- _id
+|-- userId (reference to User model)
+|-- propertyId (reference to Property model)
+|-- timestamp
+|-- (other favorite-related fields)
+
+GeoLocationUpdate
+|-- userId (reference to User model)
+|-- location (embedded object with latitude and longitude)
+|-- timestamp
+|-- (other geolocation-related fields)
+
+Chat
+|-- _id
+|-- participants (array of user references)
+|-- messages (array of message objects)
+|   |-- senderId (reference to User model)
+|   |-- content
+|   |-- timestamp
+|-- (other chat-related fields)
+
+SocketConnection
+|-- userId
+|-- socketId
+|-- (other socket connection-related fields)
