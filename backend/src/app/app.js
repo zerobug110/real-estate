@@ -11,5 +11,6 @@ app.use(express.json())
 //======= routes
 app.use('/api/v1/clients', clientRoute )
 app.use('/api/v1/properties', propertiesRoute )
+// app.use("/api/v1/reviews")
 
 module.exports = app
