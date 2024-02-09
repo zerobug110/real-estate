@@ -9,10 +9,7 @@ const {
 
 const clientRoute = express.Router()
 
-clientRoute
-    .route('/')
-    .post(createClientCtrl)
-    .get(getAllClientsCtrl)
+clientRoute.route("/").post(createClientCtrl).get(getAllClientsCtrl);
 
 clientRoute
   .route('/:id')
