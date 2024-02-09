@@ -1,4 +1,4 @@
-exports.CreateClientCtrl = async(req, res) => {
+exports.createClientCtrl = (req, res) => {
     try {
         res.status(200).json({
             status: "success",
@@ -13,18 +13,18 @@ exports.getAllClientsCtrl = async(req, res) => {
     try {
         res.status(200).json({
             status: "success",
-            data: "get client successfully"
+            data: "get All client successfully"
         })
     } catch (error) {
         
     }
 }
 
-exports.getClientsCtrl = async(req, res) => {
+exports.getClientCtrl = async(req, res) => {
     try {
         res.status(200).json({
             status: "success",
-            data: "get all client successfully"
+            data: "get client successfully"
         })
     } catch (error) {
         

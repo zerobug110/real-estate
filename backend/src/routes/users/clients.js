@@ -1,13 +1,23 @@
 const express = require('express')
-const { getClietsCtrl } = require('../../controllers/users/clientsCtrl')
+const {  
+    getAllClientsCtrl, 
+    createClientCtrl, 
+    getClientCtrl,
+    updateClientCtrl,
+    deleteClientCtrl
+ } = require('../../controllers/users/clientsCtrl')
 
 const clientRoute = express.Router()
 
-clientRoute.post('/', getClietsCtrl)
-clientRoute.get('/', getClietsCtrl)
-clientRoute.get('/:id', getClietsCtrl)
-clientRoute.put('/:id', getClietsCtrl)
-clientRoute.delete('/:id', getClietsCtrl)
+clientRoute
+    .route('/')
+    .post(createClientCtrl)
+    .get(getAllClientsCtrl)
 
+clientRoute
+  .route('/:id')
+  .get(getClientCtrl)
+  .put(updateClientCtrl)
+  .delete(deleteClientCtrl)
 
 module.exports = clientRoute
