@@ -17,7 +17,7 @@ const clientSchema = new Schema(
     },
     email: {
       type: String,
-      required: [true, "please add an email"],
+      required: true,
       trim: true,
       lowercase: true,
       unique: true,
@@ -25,7 +25,7 @@ const clientSchema = new Schema(
       validate: [validateEmail, "Please fill a valid email address"],
       match: [
         /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-        "Please fill a valid email address",
+        "please add an email",
       ],
     },
     role: {
