@@ -9,7 +9,7 @@ const clientSchema = new Schema(
     name: {
       type: String,
       required: [true, "please add a name"],
-      maxLength: [50, "name cant not  be more than 50 characters "],
+      maxLength: [50, "name can not  be more than 50 characters "],
     },
     username: {
       type: String,
@@ -35,11 +35,5 @@ const clientSchema = new Schema(
   { timestamps: true }
 );
 
-const client = mongoose.model("Clent", clientSchema);
-module.exports = Clent;
-
-// |-- _id
-// |-- username
-// |-- email
-// |-- password
-// |-- (other user-related fields)
+const client = mongoose.model("Client", clientSchema);
+module.exports = Client;
