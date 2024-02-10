@@ -28,6 +28,10 @@ const clientSchema = new Schema(
         "please add an email",
       ],
     },
+    phone: {
+      type: String,
+      maxLength: [20, 'Phone number can not be longer than 20 characters']
+    }
     role: {
       default: "client",
     },
