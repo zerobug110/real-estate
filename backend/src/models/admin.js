@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const AdminSchema = new Schema({
-  type: mongoose.Types.ObjectId,
   name: String,
   required: true,
   email: {
@@ -11,7 +10,6 @@ const AdminSchema = new Schema({
     trim: true,
     lowercase: true,
     unique: true,
-    required: "Email address is required",
     validate: [validateEmail, "Please fill a valid email address"],
     match: [
       /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
@@ -19,8 +17,14 @@ const AdminSchema = new Schema({
     ],
   },
   telephone: Number,
-  ref: "Property",
-  default: "admin",
+  property: {
+    type: mongoose.Types.ObjectId,
+    ref: "Property",
+  },
+  role: {
+    type: String,
+    default: "admin",
+  },
 });
 
 const Admin = mongoose.model("Admin", AdminSchema);

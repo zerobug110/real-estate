@@ -1,12 +1,3 @@
-// Review
-// |-- _id
-// |-- userId (reference to User model)
-// |-- propertyId (reference to Property model)
-// |-- rating
-// |-- comments
-// |-- timestamp
-// |-- (other review-related fields)
-
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 

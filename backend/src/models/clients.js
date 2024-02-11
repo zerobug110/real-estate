@@ -29,6 +29,7 @@ const clientSchema = new Schema(
       maxLength: [20, "Phone number can not be longer than 20 characters"],
     },
     role: {
+      type: String,
       default: "client",
     },
   },
