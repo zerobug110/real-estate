@@ -11,10 +11,6 @@ const clientSchema = new Schema(
       required: [true, "please add a name"],
       maxLength: [50, "name can not  be more than 50 characters "],
     },
-    username: {
-      type: String,
-      required: [true, "please add a username"],
-    },
     email: {
       type: String,
       required: true,
@@ -30,8 +26,8 @@ const clientSchema = new Schema(
     },
     phone: {
       type: String,
-      maxLength: [20, 'Phone number can not be longer than 20 characters']
-    }
+      maxLength: [20, "Phone number can not be longer than 20 characters"],
+    },
     role: {
       default: "client",
     },
