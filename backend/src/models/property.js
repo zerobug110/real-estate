@@ -28,9 +28,9 @@ const PropertySchema = new Schema(
     address: {
       String,
     },
-    isAvaliable: {
-      type: Boolean,
-      default: true,
+    status: {
+      type: String,
+      default: "vacant",
     },
     images: [
       {
