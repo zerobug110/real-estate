@@ -22,3 +22,6 @@ const ListingShema = new Schema({
   //     no: this.property.length,
   //   },
 });
+
+const Listings = mongoose.model("Listings", ListingShema);
+module.exports = Listings;
