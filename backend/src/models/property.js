@@ -77,7 +77,6 @@ const PropertySchema = new Schema(
         "Contemporary House",
         "Modern House",
         "Log Cabin",
-        ,
         "Geodesic Dome House",
         "Tudor House",
         "Split-Level House",
