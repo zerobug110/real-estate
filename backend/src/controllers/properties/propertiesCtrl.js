@@ -35,3 +35,12 @@ exports.createPropertyCtrl = async (req, res, next) => {
     data: apt,
   });
 };
+
+
+exports.getAllProperties = async (req, res, next) => {
+  const properties = await Property.find();
+  res.status(200).json({
+    success: true,
+    data: properties,
+  });
+};

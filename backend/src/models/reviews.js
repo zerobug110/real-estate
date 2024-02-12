@@ -4,18 +4,19 @@ const Schema = mongoose.Schema;
 const ReviewSchema = new Schema(
   {
     author: {
-      type: String,
+      type: mongoose.Types.ObjectId,
       required: true,
+      ref: "Client",
     },
     description: {
       type: String,
       required: true,
       maxLength: [500, "review can not be more than 500 characters"],
     },
-    wroteBy: {
+    property: {
       type: mongoose.Types.ObjectId,
-      ref: "Client",
-      required: true,
+      req: true,
+      ref: "Property",
     },
     rating: {
       type: Number,
