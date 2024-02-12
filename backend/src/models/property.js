@@ -20,7 +20,7 @@ const PropertySchema = new Schema(
       type: Number,
     },
     squareFootage: {
-      type: string,
+      type: String,
     },
     price: {
       type: Number,
@@ -32,34 +32,34 @@ const PropertySchema = new Schema(
       type: String,
       default: "vacant",
     },
-    images: [
-      {
-        filename: {
-          type: String,
-          required: true,
-          default: "no-photo.jpg ",
-        },
-      },
-    ],
-    location: {
-      type: {
-        type: String,
-        enum: ["Point"],
-        required: true,
-      },
-      coordinates: {
-        type: [Number],
-        required: true,
-        index: "2dsphere",
-      },
-      fomarttedAddress: String,
-      street: String,
-      city: String,
-      postalCode: String,
-      country: String,
-    },
+    // images: [
+    //   {
+    //     filename: {
+    //       type: String,
+    //       required: true,
+    //       default: "no-photo.jpg ",
+    //     },
+    //   },
+    // ],
+    // location: {
+    //   type: {
+    //     type: String,
+    //     enum: ["Point"],
+    //     required: true,
+    //   },
+    //   coordinates: {
+    //     type: [Number],
+    //     required: true,
+    //     index: "2dsphere",
+    //   },
+    //   fomarttedAddress: String,
+    //   street: String,
+    //   city: String,
+    //   postalCode: String,
+    //   country: String,
+    // },
     type: {
-      type: [string],
+      type: [String],
       required: true,
       enum: [
         "Single-Family Home",

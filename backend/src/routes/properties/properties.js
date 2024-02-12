@@ -1,10 +1,10 @@
-const express = require('express')
-const { propertiesCtrl } = require('../../controllers/properties/propertiesCtrl')
+const express = require("express");
+const {
+  createPropertyCtrl,
+} = require("../../controllers/properties/propertiesCtrl");
 
-const propertiesRoute = express.Router()
+const propertiesRoute = express.Router();
 
-propertiesRoute.route("/").get(propertiesCtrl);
-    
+propertiesRoute.route("/").post(createPropertyCtrl);
 
-
-module.exports = propertiesRoute
+module.exports = propertiesRoute;
