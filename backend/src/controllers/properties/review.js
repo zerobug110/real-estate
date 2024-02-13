@@ -34,7 +34,7 @@ exports.UpdateReviewCtrl = async (req, res, next) => {
 
   if (!review) {
     return res.status(400).json({
-      success: "false",
+      success: false,
     });
   }
   res.status(200).json({
@@ -42,3 +42,20 @@ exports.UpdateReviewCtrl = async (req, res, next) => {
     data: review,
   });
 };
+
+exports.deleteReviewCtrl = async (req, res, next) => {
+  const review = await Review.findByIdAndDelete(req.params.id);
+
+  if (!review) {
+    return res.status(400).json({
+      success: false,
+      error: "Review not found",
+    });
+  }
+
+  res.status(200).json({
+    success: true,
+    data: {},
+  });
+};
+  

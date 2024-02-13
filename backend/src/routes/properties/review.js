@@ -3,6 +3,7 @@ const {
   getAllReviewsCtrl,
   getReviewCtrl,
   UpdateReviewCtrl,
+  deleteReviewCtrl,
 } = require("../../controllers/properties/review");
 
 const express = require("express");
@@ -14,6 +15,6 @@ reviewRouter
   .route("/:id")
   .get(getReviewCtrl)
   .put(UpdateReviewCtrl)
-//   .delete(deleteReview);
+  .delete(deleteReviewCtrl);
 
 module.exports = reviewRouter;
