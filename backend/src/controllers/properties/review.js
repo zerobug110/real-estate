@@ -14,6 +14,7 @@ exports.getAllReviewsCtrl = async (req, res, next) => {
   res.status(200).json({
     success: true,
     data: reviews,
+    count: reviews.length,
   });
 };
 
@@ -31,7 +32,7 @@ exports.UpdateReviewCtrl = async (req, res, next) => {
     runValidators: true,
   });
 
-  if (!reiew) {
+  if (!review) {
     return res.status(400).json({
       success: "false",
     });

@@ -33,7 +33,7 @@ exports.updateClientCtrl = async (req, res) => {
   try {
     res.status(200).json({
       status: "success",
-      data: "client updated successfully",
+      data: "client updated successfully!!!",
     });
   } catch (error) {}
 };
