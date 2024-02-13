@@ -1,32 +1,32 @@
 const Review = require("../../models/reviews");
+const AsyncHandler = require("express-async-handler");
 
-exports.createReviewCtrl = async (req, res, next) => {
+exports.createReviewCtrl = AsyncHandler(async (req, res, next) => {
   const { author, description, property, rating } = req.body;
   const review = await Review.create({ author, description, property, rating });
   res.status(201).json({
     staus: "success",
     data: review,
   });
-};
+});
 
-exports.getAllReviewsCtrl = async (req, res, next) => {
+exports.getAllReviewsCtrl = AsyncHandler(async (req, res, next) => {
   const reviews = await Review.find();
   res.status(200).json({
     success: true,
     data: reviews,
     count: reviews.length,
   });
-};
-
-exports.getReviewCtrl = async (req, res, next) => {
+});
+exports.getReviewCtrl = AsyncHandler(async (req, res, next) => {
   const review = await Review.findById(req.params.id);
   res.status(200).json({
     success: "true",
     data: review,
   });
-};
+});
 
-exports.UpdateReviewCtrl = async (req, res, next) => {
+exports.UpdateReviewCtrl = AsyncHandler(async (req, res, next) => {
   const review = await Review.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
@@ -41,9 +41,9 @@ exports.UpdateReviewCtrl = async (req, res, next) => {
     success: "true",
     data: review,
   });
-};
+});
 
-exports.deleteReviewCtrl = async (req, res, next) => {
+exports.deleteReviewCtrl = AsyncHandler(async (req, res, next) => {
   const review = await Review.findByIdAndDelete(req.params.id);
 
   if (!review) {
@@ -57,5 +57,4 @@ exports.deleteReviewCtrl = async (req, res, next) => {
     success: true,
     data: {},
   });
-};
-  
+}); 
