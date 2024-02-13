@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const clientRoute = require('../routes/users/clients');
 const propertiesRoute = require('../routes/properties/properties');
 const reviewRouter = require("../routes/properties/review");
+const globalErrorHander = require("../middlewares/globalErrorHandler");
 const app = express();
 
 //======= middlewares
@@ -13,5 +14,8 @@ app.use(express.json());
 app.use("/api/v1/clients", clientRoute);
 app.use("/api/v1/properties", propertiesRoute);
 app.use("/api/v1/reviews", reviewRouter);
+
+//======= global error handlers
+app.use(globalErrorHander);
 
 module.exports = app
