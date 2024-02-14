@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const geocoder = require("../utils/geoCoder");
 
 const Schema = mongoose.Schema;
 
@@ -12,6 +13,10 @@ const PropertySchema = new Schema(
       type: String,
       required: true,
       maxLength: [500, "please add a description"],
+    },
+    address: {
+      type: String,
+      required: true,
     },
     bedrooms: {
       type: Number,
@@ -32,32 +37,32 @@ const PropertySchema = new Schema(
       type: String,
       default: "vacant",
     },
-    // images: [
-    //   {
-    //     filename: {
-    //       type: String,
-    //       required: true,
-    //       default: "no-photo.jpg ",
-    //     },
-    //   },
-    // ],
-    // location: {
-    //   type: {
-    //     type: String,
-    //     enum: ["Point"],
-    //     required: true,
-    //   },
-    //   coordinates: {
-    //     type: [Number],
-    //     required: true,
-    //     index: "2dsphere",
-    //   },
-    //   fomarttedAddress: String,
-    //   street: String,
-    //   city: String,
-    //   postalCode: String,
-    //   country: String,
-    // },
+    images: [
+      {
+        filename: {
+          type: String,
+          required: true,
+          default: "no-photo.jpg ",
+        },
+      },
+    ],
+    location: {
+      type: {
+        type: String,
+        enum: ["Point"],
+        // required: true,
+      },
+      coordinates: {
+        type: [Number],
+        // required: true,
+        index: "2dsphere",
+      },
+      fomarttedAddress: String,
+      street: String,
+      city: String,
+      postalCode: String,
+      country: String,
+    },
     type: {
       type: [String],
       required: true,
@@ -97,6 +102,24 @@ const PropertySchema = new Schema(
   },
   { timestamps: true }
 );
+
+//geolocation fields
+PropertySchema.pre("save", async function (next) {
+  const loc = await geocoder.geocode(this.address);
+  this.location({
+    type: "point",
+    coordinates: [log[0].longitude, log[0].latitude],
+    formattedAddress: log[0].formattedAddress,
+    street: log[0].streetName,
+    city: log[0].stateCode,
+    zipcode: log[0].zipcode,
+    country: log[0].countryCode,
+  });
+  next();
+});
+
+//unsave the address from the req
+this.address = undefined;
 
 const Property = mongoose.model("Property", PropertySchema);
 module.exports = Property;

@@ -56,7 +56,7 @@ exports.updateClientCtrl = AsyncHandler(async (req, res, next) => {
   });
 });
 
-// @des delete client
+// @des delete clientz
 // @route delete api/v1/clients:id
 // @access pivate
 exports.deleteClientCtrl = AsyncHandler(async (req, res) => {
@@ -69,9 +69,10 @@ exports.deleteClientCtrl = AsyncHandler(async (req, res) => {
       success: false,
       error: "client not found",
     });
-    res.status(200).json({
-      success: true,
-      data: {},
-    });
   }
+  // return empty object
+  res.status(200).json({
+    success: true,
+    data: {},
+  });
 });

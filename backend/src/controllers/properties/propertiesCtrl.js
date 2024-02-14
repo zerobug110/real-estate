@@ -1,7 +1,7 @@
 const AsyncHandler = require("express-async-handler");
 const Property = require("../../models/property");
 
-// @des create  property
+// @desc create  property
 // @route post api/v1/properties
 // @access public
 exports.createPropertyCtrl = async (req, res, next) => {
@@ -40,7 +40,7 @@ exports.createPropertyCtrl = async (req, res, next) => {
   });
 };
 
-// @des get property
+// @desc get property
 // @route get api/v1/properties
 // @access public
 exports.getAllPropertiesCtrl = async (req, res, next) => {
@@ -51,7 +51,7 @@ exports.getAllPropertiesCtrl = async (req, res, next) => {
   });
 };
 
-// @des get propeerty
+// @desc get propeerty
 // @route get api/v1/properties/:id
 // @access public
 exports.getPropertyCtrl = AsyncHandler(async (req, res) => {
