@@ -22,7 +22,7 @@ const BookingSchema = new Schema({
     type: Date,
     required: true,
   },
-  statu: {
+  status: {
     type: String,
     default: "booked",
   },
