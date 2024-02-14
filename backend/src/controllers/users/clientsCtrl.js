@@ -20,6 +20,7 @@ exports.getAllClientsCtrl = AsyncHandler(async (req, res) => {
   const user = await Client.find();
   res.status(200).json({
     status: "success",
+    count: user.length,
     data: user,
   });
 });

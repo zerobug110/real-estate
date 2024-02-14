@@ -1,6 +1,9 @@
 const Review = require("../../models/reviews");
 const AsyncHandler = require("express-async-handler");
 
+// @desc create  review
+// @route post api/v1/reviews
+// @access public
 exports.createReviewCtrl = AsyncHandler(async (req, res, next) => {
   const { author, description, property, rating } = req.body;
   const review = await Review.create({ author, description, property, rating });
@@ -10,14 +13,21 @@ exports.createReviewCtrl = AsyncHandler(async (req, res, next) => {
   });
 });
 
+// @desc get all  reviews
+// @route get api/v1/reviews
+// @access public
 exports.getAllReviewsCtrl = AsyncHandler(async (req, res, next) => {
   const reviews = await Review.find();
   res.status(200).json({
     success: true,
-    data: reviews,
     count: reviews.length,
+    data: reviews,
   });
 });
+
+// @desc get  review
+// @route get api/v1/review/:id
+// @access public
 exports.getReviewCtrl = AsyncHandler(async (req, res, next) => {
   const review = await Review.findById(req.params.id);
   res.status(200).json({
@@ -26,6 +36,9 @@ exports.getReviewCtrl = AsyncHandler(async (req, res, next) => {
   });
 });
 
+// @desc update  review
+// @route put api/v1/review/:id
+// @access public
 exports.UpdateReviewCtrl = AsyncHandler(async (req, res, next) => {
   const review = await Review.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
@@ -43,6 +56,9 @@ exports.UpdateReviewCtrl = AsyncHandler(async (req, res, next) => {
   });
 });
 
+// @desc delete  review
+// @route post api/v1/reviews/:id
+// @access public
 exports.deleteReviewCtrl = AsyncHandler(async (req, res, next) => {
   const review = await Review.findByIdAndDelete(req.params.id);
 

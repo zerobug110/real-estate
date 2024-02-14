@@ -41,12 +41,13 @@ exports.createPropertyCtrl = async (req, res, next) => {
 };
 
 // @desc get property
-// @route get api/v1/properties
+// @route get all api/v1/properties
 // @access public
 exports.getAllPropertiesCtrl = async (req, res, next) => {
   const properties = await Property.find();
   res.status(200).json({
     success: true,
+    count: properties.length,
     data: properties,
   });
 };
