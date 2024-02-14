@@ -38,7 +38,7 @@ exports.UpdateReviewCtrl = AsyncHandler(async (req, res, next) => {
     });
   }
   res.status(200).json({
-    success: "true",
+    success: true,
     data: review,
   });
 });

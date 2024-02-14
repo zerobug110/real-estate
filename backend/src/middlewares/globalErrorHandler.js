@@ -24,9 +24,9 @@ const globalErrorHandler = (err, req, res, next) => {
     error = new ErrorResponse(message, 400);
   }
 
-  res.status(error.statusCode || 500).json({
+  res.status(err.statusCode || 500).json({
     success: false,
-    error: error.message || "Server Error",
+    error: err.message || "Server Error",
   });
 
   res.status(statusCode).json({

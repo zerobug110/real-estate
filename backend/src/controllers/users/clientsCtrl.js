@@ -1,48 +1,77 @@
-const client = require("../../models/clients");
+const AsyncHandler = require("express-async-handler");
+const Client = require("../../models/clients");
 
 // @des create client
-// @route api/v1/clients
+// @route post api/v1/clients
 // @access public
-exports.createClientCtrl = async (req, res) => {
+exports.createClientCtrl = AsyncHandler(async (req, res) => {
   const { name, email, password, phone } = req.body;
-  const user = await client.create({ name, email, password, phone });
+  const user = await Client.create({ name, email, password, phone });
   res.status(201).json({
     status: "success",
     data: user,
   });
-};
+});
 
-exports.getAllClientsCtrl = async (req, res) => {
-  const user = client.find();
+// @des get all  clients
+// @route get api/v1/clients
+// @access public
+exports.getAllClientsCtrl = AsyncHandler(async (req, res) => {
+  const user = await Client.find();
   res.status(200).json({
     status: "success",
     data: user,
   });
-};
+});
 
-exports.getClientCtrl = async (req, res) => {
-  try {
-    res.status(200).json({
-      status: "success",
-      data: "get client successfully",
-    });
-  } catch (error) {}
-};
+// @des get client
+// @route get api/v1/clients/:id
+// @access public
+exports.getClientCtrl = AsyncHandler(async (req, res) => {
+  const client = await Client.findById(req.params.id);
+  res.status(200).json({
+    success: true,
+    data: client,
+  });
+});
 
-exports.updateClientCtrl = async (req, res) => {
-  try {
-    res.status(200).json({
-      status: "success",
-      data: "client updated successfully!!!",
+// @des update client
+// @route put api/v1/clients/:id
+// @access private
+exports.updateClientCtrl = AsyncHandler(async (req, res, next) => {
+  const client = await Client.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+  // if the id does not exist
+  if (!client) {
+    return res.status(404).json({
+      success: false,
     });
-  } catch (error) {}
-};
+  }
+  //updated data
+  res.status(200).json({
+    success: true,
+    data: client,
+  });
+});
 
-exports.deleteClientCtrl = async (req, res) => {
-  try {
-    res.status(200).json({
-      status: "success",
-      data: "client deleted successfully",
+// @des delete client
+// @route delete api/v1/clients:id
+// @access pivate
+exports.deleteClientCtrl = AsyncHandler(async (req, res) => {
+  const client = await Client.findByIdAndDelete(req.params.id);
+  res.status(200).json({
+    success: true,
+  });
+  if (!review) {
+    return res.status(404).json({
+      success: false,
+      error: "client not found",
     });
-  } catch (error) {}
-};
+    res.status(200).json({
+      success: true,
+      data: {},
+    });
+  }
+});

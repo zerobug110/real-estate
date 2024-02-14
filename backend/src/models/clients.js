@@ -40,6 +40,6 @@ const clientSchema = new Schema(
   { timestamps: true }
 );
 
-const client = mongoose.model("Client", clientSchema);
-module.exports = client;
+const Client = mongoose.model("Client", clientSchema);
+module.exports = Client;
 ; 

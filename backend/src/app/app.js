@@ -11,9 +11,9 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 //======= routes
-app.use("/api/v1/clients", clientRoute);
 app.use("/api/v1/properties", propertiesRoute);
 app.use("/api/v1/reviews", reviewRouter);
+app.use("/api/v1/clients", clientRoute);
 
 //======= global error handlers
 app.use(globalErrorHandler);
