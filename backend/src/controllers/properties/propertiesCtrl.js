@@ -52,13 +52,53 @@ exports.getAllPropertiesCtrl = async (req, res, next) => {
   });
 };
 
-// @desc get propeerty
+// @desc get property
 // @route get api/v1/properties/:id
 // @access public
 exports.getPropertyCtrl = AsyncHandler(async (req, res) => {
   const property = await Property.findById(req.params.id);
+  if (!property) {
+    res.status(404).json({
+      success: false,
+      error: "property not found",
+    });
+  }
   res.status(200).json({
     success: false,
     data: property,
   });
 });
+
+// @desc update propeerty
+// @route put api/v1/properties/:id
+// @access public
+exports.updatePropertyCtrl = AsyncHandler(async (req, res, next) => {
+  const property = await Property.findByIdAndUpdate(req.params.id, req.body, {
+    new: true, 
+    runValidators: true
+  })
+  if(!property) {
+    return res.status(400).json({
+      success: true,
+      error: "not found"
+    })
+  }
+  res.status(200).json({
+    success: true,
+    data: property,
+  })
+})
+
+exports.deletePropertyCtrl = AsyncHandler(async(req, res, next) => {
+  const property = await Property.findByIdAndDelete(req.params.id)
+  if(!property) {
+    return res.status(404).json({
+      success: true,
+      message: "property not found"
+    })
+  }
+  res.status(200).json({
+    success: true,
+    data: property,
+  })
+})
