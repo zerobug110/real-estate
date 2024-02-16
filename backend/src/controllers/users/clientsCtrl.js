@@ -18,12 +18,13 @@ exports.createClientCtrl = AsyncHandler(async (req, res) => {
 // @access public
 exports.getAllClientsCtrl = AsyncHandler(async (req, res) => {
   let query;
-  let queryStr = JSON.stringify(req.query).replace(
+  let reqQuery = { ...req.body };
+  let queryStr = JSON.stringify(reqQuery);
+
+  query = await Client.find(JSON.parse(queryStr)).replace(
     /\b(gt|gte|lt|lte|in)\b/g,
     (match) => `$${match}`
   );
-
-  query = await Client.find(JSON.parse(queryStr));
   const user = await query;
   res.status(200).json({
     status: "success",
