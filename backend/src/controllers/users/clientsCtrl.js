@@ -17,7 +17,14 @@ exports.createClientCtrl = AsyncHandler(async (req, res) => {
 // @route get api/v1/clients
 // @access public
 exports.getAllClientsCtrl = AsyncHandler(async (req, res) => {
-  const user = await Client.find();
+  let query;
+  let queryStr = JSON.stringify(req.query).replace(
+    /\b(gt|gte|lt|lte|in)\b/g,
+    (match) => `$${match}`
+  );
+
+  query = await Client.find(JSON.parse(queryStr));
+  const user = await query;
   res.status(200).json({
     status: "success",
     count: user.length,

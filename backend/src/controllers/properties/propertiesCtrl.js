@@ -44,6 +44,8 @@ exports.createPropertyCtrl = async (req, res, next) => {
 // @route get all api/v1/properties
 // @access public
 exports.getAllPropertiesCtrl = async (req, res, next) => {
+  console.log("first");
+  console.log(req.query);
   const properties = await Property.find();
   res.status(200).json({
     success: true,

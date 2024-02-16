@@ -104,22 +104,22 @@ const PropertySchema = new Schema(
 );
 
 //geolocation fields for map
-PropertySchema.pre("save", async function (next) {
-  const loc = await geocoder.geocode(this.address);
-  this.location({
-    type: "point",
-    coordinates: [log[0].longitude, log[0].latitude],
-    formattedAddress: log[0].formattedAddress,
-    street: log[0].streetName,
-    city: log[0].stateCode,
-    zipcode: log[0].zipcode,
-    country: log[0].countryCode,
-  });
-  next();
-});
+// PropertySchema.pre("save", async function (next) {
+//   const loc = await geocoder.geocode(this.address);
+//   this.location({
+//     type: "point",
+//     coordinates: [log[0].longitude, log[0].latitude],
+//     formattedAddress: log[0].formattedAddress,
+//     street: log[0].streetName,
+//     city: log[0].stateCode,
+//     zipcode: log[0].zipcode,
+//     country: log[0].countryCode,
+//   });
+//   next();
+// });
 
-//unsave the address from the req
-this.address = undefined;
+// //unsave the address from the req
+// this.address = undefined;
 
 const Property = mongoose.model("Property", PropertySchema);
 module.exports = Property;

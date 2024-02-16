@@ -1,6 +1,6 @@
 const fs = require("fs");
 const mongoose = require("mongoose");
-const Client = require("./models/clients");
+const Client = require("./src/models/clients");
 require("dotenv").config();
 
 //connect to the db
