@@ -40,10 +40,20 @@ exports.getBooking = AsyncHandler(async (req, res, next) => {
 //@route get /api/v1/bookings
 //@access private
 exports.getAllBooking = AsyncHandler(async (req, res, next) => {
-  const bookings = await Bookings.find();
+  // Execute query with page and limit valaes
+  const bookings = await Bookings.find()
+    .limit(limit * 1)
+    .skip((page - 1) * limit)
+    .exec();
+
+  //get total  bookings count
+  const count = await Bookings.count;
+
+  //return respons with bookings, titak oage, current page
   res.status(200).status({
     success: true,
-    count: bookings.length,
+    count: Math.ceil(count / limit),
+    currentPage: page,
     data: bookings,
   });
 });
