@@ -15,6 +15,7 @@ const ListingShema = new Schema({
       required: true,
     },
   ],
+  trim: true,
   availablility: {
     type: String,
   },

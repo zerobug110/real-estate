@@ -7,6 +7,7 @@ const BookingSchema = new Schema({
     required: true,
     ref: "Client",
   },
+  trim: true,
   propety: [
     {
       type: mongoose.Types.ObjectId,

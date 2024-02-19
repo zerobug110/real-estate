@@ -46,7 +46,16 @@ exports.createPropertyCtrl = async (req, res, next) => {
 exports.getAllPropertiesCtrl = async (req, res, next) => {
   console.log("first");
   console.log(req.query);
-  const properties = await Property.find();
+  let query;
+  let queryStr = JSON.stringify(req.query);
+
+  queryStr = queryStr.replace(
+    /\b(gt|gte|lt|lte|in)\b/g,
+    (match) => `$${match}`
+  );
+
+  query = Property.find(JSON.parse(queryStr));
+  const properties = await query;
   res.status(200).json({
     success: true,
     count: properties.length,

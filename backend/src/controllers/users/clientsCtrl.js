@@ -16,7 +16,9 @@ exports.createClientCtrl = AsyncHandler(async (req, res) => {
 // @des get all  clients
 // @route get api/v1/clients
 // @access public
+
 exports.getAllClientsCtrl = AsyncHandler(async (req, res) => {
+  //qeury search
   let query;
   let reqQuery = { ...req.body };
   let queryStr = JSON.stringify(reqQuery);

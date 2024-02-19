@@ -3,14 +3,12 @@ const Schema = mongoose.Schema;
 
 const clientSchema = new Schema(
   {
-    clientId: {
-      type: Schema.Types.ObjectId,
-    },
     name: {
       type: String,
       required: [true, "please add a name"],
       maxLength: [50, "name can not  be more than 50 characters "],
     },
+    // trim: true,
     password: {
       type: String,
       required: true,

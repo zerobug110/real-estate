@@ -8,15 +8,18 @@ const PropertySchema = new Schema(
     name: {
       type: String,
       required: true,
+      trim: true,
     },
     description: {
       type: String,
       required: true,
       maxLength: [500, "please add a description"],
+      trim: true,
     },
     address: {
       type: String,
       required: true,
+      trim: true,
     },
     bedrooms: {
       type: Number,
@@ -31,11 +34,13 @@ const PropertySchema = new Schema(
       type: Number,
     },
     address: {
-      String,
+      type: String,
+      trim: true,
     },
     status: {
       type: String,
       default: "vacant",
+      trim: true,
     },
     images: [
       {

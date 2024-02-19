@@ -9,6 +9,7 @@ const FavoriteSchema = new Schema(
         ref: "Client",
       },
     ],
+    trim: true,
     property: {
       type: mongoose.Types.ObjectId,
       ref: "Property",
