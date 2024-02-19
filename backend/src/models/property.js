@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const geocoder = require("../utils/geoCoder");
+// const geocoder = require("../utils/geoCoder");
 
 const Schema = mongoose.Schema;
 

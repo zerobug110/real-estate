@@ -1,5 +1,6 @@
 const AsyncHandler = require("express-async-handler");
 const Property = require("../../models/property");
+const { Query } = require("mongoose");
 
 // @desc create  property
 // @route post api/v1/properties
@@ -44,18 +45,48 @@ exports.createPropertyCtrl = async (req, res, next) => {
 // @route get all api/v1/properties
 // @access public
 exports.getAllPropertiesCtrl = async (req, res, next) => {
-  console.log("first");
-  console.log(req.query);
+  //query filter
   let query;
-  let queryStr = JSON.stringify(req.query);
 
+  //copy req.query
+  const reqQuery = { ...req.body };
+
+  // Filed to exclude
+  const removeField = ["select", "sort"];
+
+  //loop over remover filed and delete them from reqQuery
+  removeField.forEach((param) => delete reqQuery[param]);
+
+  //create query string
+  let queryStr = JSON.stringify(reqQuery);
+
+  //create operatores like ($gt, $gte, $lt, $lte)
   queryStr = queryStr.replace(
     /\b(gt|gte|lt|lte|in)\b/g,
     (match) => `$${match}`
   );
 
+  //finding resource
   query = Property.find(JSON.parse(queryStr));
+
+  //select fields
+  if (req.query.select) {
+    const fields = req.query.select.split(",").join(" ");
+    console.log(fields);
+    query = query.select(fields);
+  }
+
+  //sorting
+  if (req.query.sort) {
+    const sortBy = req.query.sort.split(",").join(" ");
+    query = query.sort(sortBy);
+  } else {
+    query = query.sort("-createdAt");
+  }
+
+  //executing query
   const properties = await query;
+
   res.status(200).json({
     success: true,
     count: properties.length,
