@@ -108,7 +108,7 @@ const PropertySchema = new Schema(
   { timestamps: true }
 );
 
-//geolocation fields for map
+// geolocation fields for map
 // PropertySchema.pre("save", async function (next) {
 //   const loc = await geocoder.geocode(this.address);
 //   this.location({
