@@ -17,7 +17,10 @@ exports.createReviewCtrl = AsyncHandler(async (req, res, next) => {
 // @route get api/v1/reviews
 // @access public
 exports.getAllReviewsCtrl = AsyncHandler(async (req, res, next) => {
-  const reviews = await Review.find();
+  const reviews = await Review.find()
+    .populate("property")
+    .populate("author")
+    .exec();
   res.status(200).json({
     success: true,
     count: reviews.length,

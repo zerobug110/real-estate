@@ -15,7 +15,7 @@ const ReviewSchema = new Schema(
     },
     property: {
       type: mongoose.Types.ObjectId,
-      req: true,
+      required: true,
       ref: "Property",
     },
     rating: {

@@ -52,7 +52,7 @@ exports.getAllPropertiesCtrl = async (req, res, next) => {
   const reqQuery = { ...req.body };
 
   // Filed to exclude
-  const removeField = ["select", "sort", "pagination"];
+  const removeField = ["select", "sort", "page", "limit"];
 
   //loop over remover filed and delete them from reqQuery
   removeField.forEach((param) => delete reqQuery[param]);
@@ -60,13 +60,13 @@ exports.getAllPropertiesCtrl = async (req, res, next) => {
   //create query string
   let queryStr = JSON.stringify(reqQuery);
 
-  /**
+  /*
+  mongodb filter operators.
   gt: greate than
   gte: greater than or equal to
   lt: less than
   lte: less than or equal to
-  **/
-
+  */
   //create operatores like ($gt, $gte, $lt, $lte)
   queryStr = queryStr.replace(
     /\b(gt|gte|lt|lte|in)\b/g,
@@ -91,11 +91,38 @@ exports.getAllPropertiesCtrl = async (req, res, next) => {
     query = query.sort("-createdAt");
   }
 
+  //pagination
+  const page = parseInt(req.query.page, 10) || 1;
+  const limit = parseInt(req.query.limit, 10) || 1;
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+  const total = await Property.countDocuments();
+  query = query.skip(startIndex).limit(limit);
+
   //executing query
   const properties = await query;
+
+  //pagination results
+  const pagination = {};
+
+  if (endIndex < total) {
+    pagination.next = {
+      page: page + 1,
+      limit,
+    };
+  }
+
+  if (startIndex > 0) {
+    pagination.prev = {
+      page: page - 1,
+      limit,
+    };
+  }
+
   res.status(200).json({
     success: true,
     count: properties.length,
+    pagination,
     data: properties,
   });
 };
