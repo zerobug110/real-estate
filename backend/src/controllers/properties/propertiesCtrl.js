@@ -52,13 +52,20 @@ exports.getAllPropertiesCtrl = async (req, res, next) => {
   const reqQuery = { ...req.body };
 
   // Filed to exclude
-  const removeField = ["select", "sort"];
+  const removeField = ["select", "sort", "pagination"];
 
   //loop over remover filed and delete them from reqQuery
   removeField.forEach((param) => delete reqQuery[param]);
 
   //create query string
   let queryStr = JSON.stringify(reqQuery);
+
+  /**
+  gt: greate than
+  gte: greater than or equal to
+  lt: less than
+  lte: less than or equal to
+  **/
 
   //create operatores like ($gt, $gte, $lt, $lte)
   queryStr = queryStr.replace(
@@ -86,7 +93,6 @@ exports.getAllPropertiesCtrl = async (req, res, next) => {
 
   //executing query
   const properties = await query;
-
   res.status(200).json({
     success: true,
     count: properties.length,

@@ -16,17 +16,46 @@ exports.createClientCtrl = AsyncHandler(async (req, res) => {
 // @des get all  clients
 // @route get api/v1/clients
 // @access public
-
 exports.getAllClientsCtrl = AsyncHandler(async (req, res) => {
   //qeury search
   let query;
+
+  //copy req.body
   let reqQuery = { ...req.body };
+
+  //field to exclude
+  const removeField = ["select", "sort", "paginate"];
+
+  //loop over remover field and delete them from reqQuery
+  removeField.forEach((param) => delete reqQuery[param]);
+
+  //create qurery String
   let queryStr = JSON.stringify(reqQuery);
 
-  query = await Client.find(JSON.parse(queryStr)).replace(
-    /\b(gt|gte|lt|lte|in)\b/g,
+  //create operators like ($gt, $te, $lt, $lte, $in)
+  queryStr = queryStr.replace(
+    /\b(gt|gtl|lt|lte|in)\b/g,
     (match) => `$${match}`
   );
+
+  //finding resource
+  query = Client.find(JSON.parse(queryStr));
+
+  //select fields
+  if (req.query.select) {
+    const fields = req.query.select.split(",").join(" ");
+    query = query.select(fields);
+  }
+
+  // sorting
+  if (req.query.sort) {
+    const sortBy = req.query.sort.split(",").join(" ");
+    query = query.select(sortBy);
+  }
+
+  //pagination
+
+  //executing query
   const user = await query;
   res.status(200).json({
     status: "success",
