@@ -3,14 +3,13 @@ const Schema = mongoose.Schema;
 
 const FavoriteSchema = new Schema(
   {
-    client: [
+    clientId: [
       {
         type: mongoose.Types.ObjectId,
         ref: "Client",
       },
     ],
-    trim: true,
-    property: {
+    propertyId: {
       type: mongoose.Types.ObjectId,
       ref: "Property",
     },
