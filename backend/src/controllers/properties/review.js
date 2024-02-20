@@ -19,7 +19,10 @@ exports.createReviewCtrl = AsyncHandler(async (req, res, next) => {
 exports.getAllReviewsCtrl = AsyncHandler(async (req, res, next) => {
   const reviews = await Review.find()
     .populate("property")
-    .populate("author")
+    .populate({
+      path: "author",
+      select: "name email phone role",
+    })
     .exec();
   res.status(200).json({
     success: true,
@@ -32,7 +35,10 @@ exports.getAllReviewsCtrl = AsyncHandler(async (req, res, next) => {
 // @route get api/v1/review/:id
 // @access public
 exports.getReviewCtrl = AsyncHandler(async (req, res, next) => {
-  const review = await Review.findById(req.params.id);
+  const review = await Review.findById(req.params.id)
+    .populate("property")
+    .populate("author")
+    .exec();
   res.status(200).json({
     success: "true",
     data: review,
