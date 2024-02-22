@@ -1,6 +1,7 @@
 const AsyncHandler = require("express-async-handler");
 const Property = require("../../models/property");
 const { Query } = require("mongoose");
+const ErrorResponse = require("../../utils/errorResponse");
 
 // @desc create  property
 // @route post api/v1/properties
@@ -133,11 +134,12 @@ exports.getAllPropertiesCtrl = async (req, res, next) => {
 exports.getPropertyCtrl = AsyncHandler(async (req, res) => {
   const property = await Property.findById(req.params.id);
   if (!property) {
-    res.status(404).json({
-      success: false,
-      error: "property not found",
-    });
+    return next(
+      new ErrorResponse(`No property with the id of ${req.params.id}`),
+      404
+    );
   }
+
   res.status(200).json({
     success: false,
     data: property,
