@@ -44,7 +44,7 @@ exports.getBookingCtrl = AsyncHandler(async (req, res, next) => {
 //@access private
 exports.getAllBookingCtrl = AsyncHandler(async (req, res, next) => {
   const bookings = await Bookings.find()
-    // .populate("tenant")
+    .populate("tenant")
     .populate("property");
 
   res.status(200).json({
