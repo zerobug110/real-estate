@@ -1,13 +1,14 @@
 const AsyncHandler = require("express-async-handler");
 const Bookings = require("../../models/bookings");
+const ErrorResponse = require("../../utils/errorResponse");
 
 // @desc create bookings
 //@route post /api/v1/bookings
 //@access private
 exports.creatBookingsCtrl = AsyncHandler(async (req, res, next) => {
-  const { client, property, checkInDate, checkOutDate } = req.body;
+  const { tenant, property, checkInDate, checkOutDate } = req.body;
   const booking = await Bookings.create({
-    client,
+    tenant,
     property,
     checkInDate,
     checkOutDate,
@@ -22,13 +23,15 @@ exports.creatBookingsCtrl = AsyncHandler(async (req, res, next) => {
 //@desc get booking
 //@route get /api/v1/bookings
 //@access private
-exports.getBooking = AsyncHandler(async (req, res, next) => {
-  const booking = await Bookings.find();
-  if (!bookings) {
-    res.status(404).json({
-      success: false,
-      error: `bookings not found`,
-    });
+exports.getBookingCtrl = AsyncHandler(async (req, res, next) => {
+  const booking = await Bookings.findById(req.params.id)
+    .populate("property")
+    .populate("tenant");
+
+  if (!booking) {
+    return next(
+      new ErrorResponse(`can't find a booking with the id of ${req.params.id}`)
+    );
   }
   res.status(200).json({
     success: true,
@@ -39,59 +42,51 @@ exports.getBooking = AsyncHandler(async (req, res, next) => {
 //@desc get all bookings
 //@route get /api/v1/bookings
 //@access private
-exports.getAllBooking = AsyncHandler(async (req, res, next) => {
-  // Execute query with page and limit valaes
+exports.getAllBookingCtrl = AsyncHandler(async (req, res, next) => {
   const bookings = await Bookings.find()
-    .limit(limit * 1)
-    .skip((page - 1) * limit)
-    .exec();
+    // .populate("tenant")
+    .populate("property");
 
-  //get total  bookings count
-  const count = await Bookings.count;
-
-  //return respons with bookings, titak oage, current page
-  res.status(200).status({
-    success: true,
-    count: Math.ceil(count / limit),
-    currentPage: page,
-    data: bookings,
-  });
+  res.status(200).json({
+  success: true,
+  count: bookings.length,
+  data: bookings,
+});
 });
 
 //@desc update bookings
 //@route put /api/v1/bookings/:id
 //@access private
-exports.updateBooking = AsyncHandler(async (req, res,next) => {
+exports.updateBookingCtrl = AsyncHandler(async (req, res, next) => {
   const booking = await Bookings.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
-  })
-  if(!review) {
+  });
+  if (!booking) {
     return res.status(404).json({
       success: true,
-        message: "bookings not found"
-      })
+      message: "bookings not found",
+    });
   }
   res.status(200).json({
     succes: true,
-    data: booking
-  })
-})
+    data: booking,
+  });
+});
 
 //@desc delete bookings
 //@route delete /api/v1/bookings/:id
 //@access private
-exports.deleteBooking = AsyncHandler(async (req, res, next) => {
-  const booking = await Bookings.findByIdAndDelete(req.params.id)  
-   if(!booking) {
-        return res.status(404).json({
-          success: false,
-            error: "booking not found"
-          })
-    }
-    res.status(200).json({
-        success: true,
-        message: "booking deleted successfully"
-    })
-    
-})
+exports.deleteBookingCtrl = AsyncHandler(async (req, res, next) => {
+  const booking = await Bookings.findByIdAndDelete(req.params.id);
+  if (!booking) {
+    return res.status(404).json({
+      success: false,
+      error: "booking not found",
+    });
+  }
+  res.status(200).json({
+    success: true,
+    message: "booking deleted successfully",
+  });
+});

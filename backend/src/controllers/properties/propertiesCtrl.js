@@ -166,6 +166,9 @@ exports.updatePropertyCtrl = AsyncHandler(async (req, res, next) => {
   })
 })
 
+// @desc delete propeerty 
+// @route delete api/v1/properties/:id/
+// @access private
 exports.deletePropertyCtrl = AsyncHandler(async(req, res, next) => {
   const property = await Property.findByIdAndDelete(req.params.id)
   if(!property) {
@@ -178,4 +181,23 @@ exports.deletePropertyCtrl = AsyncHandler(async(req, res, next) => {
     success: true,
     data: property,
   })
+})
+
+// @desc upload propeerty photo
+// @route put api/v1/properties/:id/photo
+// @access private
+exports. uploadPropertyPhotoCtrl = AsyncHandler(async(req, res, next) => {
+  const property = await Property.findById(req.params.id)
+  if(!property) {
+    return next(
+      new ErrorResponse(`No property with the id of ${req.params.id}`),
+      404
+    );
+  }
+  if(!res.files) {
+    return next(
+      new ErrorResponse(`please upload a file`, 400),
+      404
+    );
+  }
 })

@@ -1,5 +1,6 @@
 const AsyncHandler = require("express-async-handler");
 const Client = require("../../models/clients");
+const ErrorResponse = require("../../utils/errorResponse");
 
 // @des create client
 // @route post api/v1/clients
@@ -67,8 +68,13 @@ exports.getAllClientsCtrl = AsyncHandler(async (req, res) => {
 // @des get client
 // @route get api/v1/clients/:id
 // @access public
-exports.getClientCtrl = AsyncHandler(async (req, res) => {
+exports.getClientCtrl = AsyncHandler(async (req, res, next) => {
   const client = await Client.findById(req.params.id);
+  if (!client) {
+    return next(
+      new ErrorResponse(`cant find client with an id of ${req.params.id} `)
+    );
+  }
   res.status(200).json({
     success: true,
     data: client,
@@ -104,7 +110,7 @@ exports.deleteClientCtrl = AsyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
   });
-  if (!review) {
+  if (!client) {
     return res.status(404).json({
       success: false,
       error: "client not found",
