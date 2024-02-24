@@ -44,8 +44,14 @@ exports.getBookingCtrl = AsyncHandler(async (req, res, next) => {
 //@access private
 exports.getAllBookingCtrl = AsyncHandler(async (req, res, next) => {
   const bookings = await Bookings.find()
-    .populate("tenant")
-    .populate("property");
+    .populate({
+      path: "tenant",
+      select: "name email phone role",
+    })
+    .populate({
+      path: "property",
+      select: "name description bedrooms bathrooms price status type images",
+    });
 
   res.status(200).json({
   success: true,
