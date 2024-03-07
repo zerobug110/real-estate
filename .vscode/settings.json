@@ -2,5 +2,7 @@
   "reactSnippets.settings.prettierEnabled": true,
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnPaste": false
+  "editor.formatOnPaste": false,
+  "editor.fontFamily": "'Fira code'",
+  "editor.fontLigatures": true
 }

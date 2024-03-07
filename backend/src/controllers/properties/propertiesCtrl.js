@@ -151,53 +151,50 @@ exports.getPropertyCtrl = AsyncHandler(async (req, res) => {
 // @access public
 exports.updatePropertyCtrl = AsyncHandler(async (req, res, next) => {
   const property = await Property.findByIdAndUpdate(req.params.id, req.body, {
-    new: true, 
-    runValidators: true
-  })
-  if(!property) {
+    new: true,
+    runValidators: true,
+  });
+  if (!property) {
     return res.status(400).json({
       success: true,
-      error: "not found"
-    })
+      error: "not found",
+    });
   }
   res.status(200).json({
     success: true,
     data: property,
-  })
-})
+  });
+});
 
-// @desc delete propeerty 
+// @desc delete propeerty
 // @route delete api/v1/properties/:id/
 // @access private
-exports.deletePropertyCtrl = AsyncHandler(async(req, res, next) => {
-  const property = await Property.findByIdAndDelete(req.params.id)
-  if(!property) {
+exports.deletePropertyCtrl = AsyncHandler(async (req, res, next) => {
+  const property = await Property.findByIdAndDelete(req.params.id);
+  if (!property) {
     return res.status(404).json({
       success: true,
-      message: "property not found"
-    })
+      message: "property not found",
+    });
   }
   res.status(200).json({
     success: true,
     data: property,
-  })
-})
+  });
+});
 
 // @desc upload propeerty photo
 // @route put api/v1/properties/:id/photo
 // @access private
-exports. uploadPropertyPhotoCtrl = AsyncHandler(async(req, res, next) => {
-  const property = await Property.findById(req.params.id)
-  if(!property) {
+exports.uploadPropertyPhotoCtrl = AsyncHandler(async (req, res, next) => {
+  const property = await Property.findById(req.params.id);
+  if (!property) {
     return next(
       new ErrorResponse(`No property with the id of ${req.params.id}`),
       404
     );
   }
-  if(!res.files) {
-    return next(
-      new ErrorResponse(`please upload a file`, 400),
-      404
-    );
+  if (!res.files) {
+    return next(new ErrorResponse(`please upload a file`, 400), 404);
   }
-})
+});

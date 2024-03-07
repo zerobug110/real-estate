@@ -1,7 +1,7 @@
-const express = require('express')
-const morgan = require('morgan');
-const clientRoute = require('../routes/users/clients');
-const propertiesRoute = require('../routes/properties/properties');
+const express = require("express");
+const morgan = require("morgan");
+const clientRoute = require("../routes/users/clients");
+const propertiesRoute = require("../routes/properties/properties");
 const reviewRouter = require("../routes/properties/review");
 const { globalErrorHandler } = require("../middlewares/globalErrorHandler");
 const fileUpload = require("express-fileupload");
@@ -23,4 +23,4 @@ app.use("/api/v1/clients", clientRoute);
 //======= global error handlers
 app.use(globalErrorHandler);
 
-module.exports = app
+module.exports = app;
