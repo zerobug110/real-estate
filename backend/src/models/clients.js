@@ -7,8 +7,8 @@ const clientSchema = new Schema(
       type: String,
       required: [true, "please add a name"],
       maxLength: [50, "name can not  be more than 50 characters "],
+      trim: true,
     },
-    // trim: true,
     password: {
       type: String,
       required: true,
@@ -34,6 +34,13 @@ const clientSchema = new Schema(
       type: String,
       default: "client",
     },
+    favorite: [
+      {
+        type: mongoose.Types.ObjectId,
+        required: true,
+        ref: "Property",
+      },
+    ],
   },
   { timestamps: true }
 );
