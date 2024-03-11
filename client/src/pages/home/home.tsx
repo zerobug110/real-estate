@@ -1,9 +1,5 @@
 function Home() {
-  return (
-    <div>
-      <h1 className='text-3xl font-bold underline'>Hello world!</h1>
-    </div>
-  );
+  return <div className='w-full h-[97vh] bg-[#f5f6f7]'></div>;
 }
 
 export default Home;
